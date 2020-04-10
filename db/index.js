@@ -1,7 +1,18 @@
 var inquirer = require('inquirer');
 
-inquirer
+
+
+
+
+const start =()=> {
+
+  inquirer
   .prompt([
+    {
+      type: "input",
+      message: "What would you like tot do?",
+      name: "option",
+    }
     /* Pass your questions in here */
   ])
   .then(answers => {
@@ -14,3 +25,5 @@ inquirer
       // Something else when wrong
     }
   });
+
+} 
