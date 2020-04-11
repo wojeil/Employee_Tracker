@@ -1,5 +1,6 @@
 var mysql = require("mysql");
 var inquirer = require('inquirer');
+var { printTable } = require('console-table-printer');
 
 
 var connection = mysql.createConnection({
@@ -84,12 +85,13 @@ function start() {
 function viewDepartments (){
     connection.query('SELECT * FROM `department`', function (err, res,) {
         if (err) throw err;
-        console.log("Departments:")
-        for (var i = 0; i< res.length; i++) {
-            console.log(res[i].name); 
-        }
-        console.log("---------------------------------------")
-        console.log("---------------------------------------")
+      printTable(res);
+        // console.log("Departments:")
+        // for (var i = 0; i< res.length; i++) {
+        //     console.log(res[i].name); 
+        // }
+        // console.log("---------------------------------------")
+        // console.log("---------------------------------------")
 
         start();
               
@@ -104,12 +106,13 @@ function viewRoles (){
     query += "FROM role INNER JOIN department ON (role.department_id = department.id)";
     connection.query(query, function (err, res,) {
         if (err) throw err;
-        console.log("Roles:")
-        for (var i = 0; i< res.length; i++) {
-            console.log(`Title: ${res[i].title}   ||   Salary: ${res[i].salary}   ||   Department: ${res[i].name}`); 
-        }
-        console.log("---------------------------------------")
-        console.log("---------------------------------------")
+        printTable(res);
+        // console.log("Roles:")
+        // for (var i = 0; i< res.length; i++) {
+        //     console.log(`Title: ${res[i].title}   ||   Salary: ${res[i].salary}   ||   Department: ${res[i].name}`); 
+        // }
+        // console.log("---------------------------------------")
+        // console.log("---------------------------------------")
 
         start();
               
@@ -124,12 +127,13 @@ function viewEmployees (){
   query += "FROM employee INNER JOIN role ON (employee.role_id = role.id)";
   connection.query(query, function (err, res,) {
       if (err) throw err;
-      console.log("Employees:")
-      for (var i = 0; i< res.length; i++) {
-          console.log(`First Name: ${res[i].first_name}   ||   Last Name: ${res[i].last_name}   ||   Title: ${res[i].title}`); 
-      }
-      console.log("---------------------------------------")
-      console.log("---------------------------------------")
+      printTable(res)
+      // console.log("Employees:")
+      // for (var i = 0; i< res.length; i++) {
+      //     console.log(`First Name: ${res[i].first_name}   ||   Last Name: ${res[i].last_name}   ||   Title: ${res[i].title}`); 
+      // }
+      // console.log("---------------------------------------")
+      // console.log("---------------------------------------")
 
       start();
             
@@ -192,7 +196,7 @@ function addRole (){
       choices: function(){
         var choiceArray =[];
         for(var i =0; i < results.length; i++){
-          choiceArray.push(results[i].id + results[i].name);
+          choiceArray.push(results[i].name);
         }
         return choiceArray;
       }
@@ -201,13 +205,17 @@ function addRole (){
   ])
    
     .then(function(answer){
-      answer.department= results.id;
+      var query = "SELECT title, salary, name ";
+    query += "FROM role INNER JOIN department ON (role.department_id = department.id)";
+    connection.query(query,function(err, results){
+      if (err) throw err;
+  
         connection.query(
         "INSERT INTO role SET ?",
         {
           title: answer.role,
           salary: answer.salary,
-          department_id: answer.department,
+          department_id: answer.department
 
 
         },
@@ -219,6 +227,7 @@ function addRole (){
         
         }
       );
+    })
     })
 })}
 
