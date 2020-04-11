@@ -25,27 +25,62 @@ connection.connect(function(err) {
 });
 
 
+// First Prompt//
+function start() {
+    inquirer
+      .prompt({
+        name: "options",
+        type: "rawlist",
+        message: "What would you like to do?",
+        choices: [
+          "View Departments",
+          "View Roles",
+          "View Employees",
+          "Add a Department",
+          "Add a Role",
+          "Add an Employee",
+          "Exit"
+        ]
+      })
+      .then(function(answer) {
+        switch (answer.options) {
+        case "View Departments":
+          viewDepartments();
+          break;
+  
+        case "View Roles":
+          viewRoles();
+          break;
+  
+        case "View Employees":
+          viewEmployees();
+          break;
+  
+        case "Add a Department":
+          addDepartment();
+          break;
+  
+        case "Add a Role":
+          addRole();
+          break;
 
-const start =()=> {
+        case "Add an Employee":
+          addEmployee();
+            break;
+        
+        case "Add an Employee":
+          updateEmployee();
+          break;
+            
+        case "Exit":
+          connection.end();
+            break;
+        }
+      });
+  }
 
-  inquirer
-  .prompt([
-    {
-      type: "input",
-      message: "What would you like tot do?",
-      name: "option",
-    }
-    /* Pass your questions in here */
-  ])
-  .then(answers => {
-    // Use user feedback for... whatever!!
-  })
-  .catch(error => {
-    if(error.isTtyError) {
-      // Prompt couldn't be rendered in the current environment
-    } else {
-      // Something else when wrong
-    }
-  });
+//Viewing Dapartments:
 
-} 
+function viewDepartments (){
+
+}
