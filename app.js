@@ -116,3 +116,26 @@ function viewRoles (){
         });
 
 }
+
+//Viewing Employees:
+
+function viewEmployees (){
+  var query = "SELECT first_name, last_name, title ";
+  query += "FROM employee INNER JOIN role ON (employee.role_id = role.id)";
+  connection.query(query, function (err, res,) {
+      if (err) throw err;
+      console.log("Employees:")
+      for (var i = 0; i< res.length; i++) {
+          console.log(`First Name: ${res[i].first_name}   ||   Last Name: ${res[i].last_name}   ||   Title: ${res[i].title}`); 
+      }
+      console.log("---------------------------------------")
+      console.log("---------------------------------------")
+
+      start();
+            
+      });
+
+}
+
+//Adding a new department:
+
