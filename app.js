@@ -234,4 +234,70 @@ function addRole (){
     })
 }
 
+//Adding a new Employee://
+
+function addEmployee(){
+  var query = "SELECT * FROM role";
+  
+  connection.query(query,function(err, results){
+    if (err) throw err;
+  inquirer
+    .prompt([
+    
+    {
+      name: "first_name",
+      type: "input",
+      message: "Enter First Name:"
+    },
+    {
+      name: "last_name",
+      type: "input",
+      message: "Enter Last Name:"
+
+    },
+    {
+      name: "role",
+      type: "rawlist",
+      message: "Please select a role from the list below:",
+      choices: function(){
+        var choiceArray =[];
+        for(var i =0; i < results.length; i++){
+          choiceArray.push(results[i].title);
+        }
+        return choiceArray;
+      }
+      
+    }
+  ])
+   
+    .then(function(answer){
+      for (let index = 0; index < results.length; index++) {
+        
+        if(results[index].title === answer.role){
+          var idRole = results[index].id;
+        }
+        
+      }
+     
+        connection.query(
+        "INSERT INTO employee SET ?",
+        {
+          first_name: answer.first_name,
+          last_name: answer.last_name,
+          role_id: idRole
+
+
+        },
+        function(err, res) {
+          if (err) throw err;
+          console.log(res.affectedRows + " has been inserted inserted!\n");
+          
+          start();
+        
+        }
+      );
+    })
+    })
+
+}
    
