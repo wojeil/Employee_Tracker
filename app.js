@@ -100,14 +100,14 @@ function viewDepartments (){
 //Viewing Roles:
 
 function viewRoles (){
-    var query = "SELECT role.title, role.salary, department.name";
-    query += "From"
-    connection.query('SELECT * FROM `role`', function (err, res,) {
+    var query = "SELECT title, salary, name ";
+    query += "FROM role INNER JOIN department ON (role.department_id = department.id)";
+    connection.query(query, function (err, res,) {
         if (err) throw err;
         console.log("Roles:")
-        // for (var i = 0; i< res.length; i++) {
-            console.log(res); 
-        // }
+        for (var i = 0; i< res.length; i++) {
+            console.log("Title: " + res[i].title + "   ||   " + "Salary: " + res[i].salary + "   ||   " + "Department: " + res[i].name); 
+        }
         console.log("---------------------------------------")
         console.log("---------------------------------------")
 
