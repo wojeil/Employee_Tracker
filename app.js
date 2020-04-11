@@ -162,3 +162,57 @@ function addDepartment (){
       );
     })
 }
+
+//Adding New Role:
+
+function addRole (){
+  inquirer
+    .prompt([
+    
+    {
+      name: "role",
+      type: "input",
+      message: "New Role:"
+    },
+    {
+      name: "salary",
+      type: "input",
+      message: "Enter a Salary for the role: "
+
+    }
+  ])
+   
+    .then(function(answer){
+        connection.query(
+        "INSERT INTO role SET ?",
+        {
+          title: answer.role,
+          salary: answer.salary,
+
+
+        },
+        function(err, res) {
+          if (err) throw err;
+          console.log(res.affectedRows + " has been inserted inserted!\n");
+          
+          start();
+        
+        }
+      );
+    })
+    }
+
+     // {
+    //   name: "department",
+    //   type: "rawlist",
+    //   message: "Please select a department from the list below:",
+    //   choices: [
+    //     "View Departments",
+    //     "View Roles",
+    //     "View Employees",
+    //     "Add a Department",
+    //     "Add a Role",
+    //     "Add an Employee",
+    //     "Exit"
+    //   ]
+    // })
