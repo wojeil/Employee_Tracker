@@ -46,7 +46,9 @@ function start() {
         switch (answer.options) {
         case "View Departments":
           viewDepartments();
-          start();
+          
+          
+          
           break;
   
         case "View Roles":
@@ -85,8 +87,18 @@ function start() {
 function viewDepartments (){
     connection.query('SELECT * FROM `department`', function (err, res,) {
         if (err) throw err;
-        console.log(res);
+        console.log("Departments:")
+        for (var i = 0; i< res.length; i++) {
+            console.log(res[i].name); 
+        }
+        console.log("---------------------------------------")
+        console.log("---------------------------------------")
+
+        start();
               
         });
 
 }
+
+//Viewing Roles:
+
