@@ -139,3 +139,26 @@ function viewEmployees (){
 
 //Adding a new department:
 
+function addDepartment (){
+  inquirer
+    .prompt({
+      name: "department",
+      type: "input",
+      message: "New Department:"
+    })
+    .then(function(answer){
+        connection.query(
+        "INSERT INTO department SET ?",
+        {
+          name: answer.department
+        },
+        function(err, res) {
+          if (err) throw err;
+          console.log(res.affectedRows + " has been inserted inserted!\n");
+          
+          start();
+        
+        }
+      );
+    })
+}
