@@ -173,7 +173,7 @@ function addRole (){
   //query data base first to add array of choices//
   var query = "SELECT * FROM department";
   
-  connection.query(query, function(err, results) {
+  connection.query(query,function(err, results){
     if (err) throw err;
   inquirer
     .prompt([
@@ -205,17 +205,20 @@ function addRole (){
   ])
    
     .then(function(answer){
-      var query = "SELECT title, salary, name ";
-    query += "FROM role INNER JOIN department ON (role.department_id = department.id)";
-    connection.query(query,function(err, results){
-      if (err) throw err;
-  
+      for (let index = 0; index < results.length; index++) {
+        
+        if(results[index].name === answer.department){
+          var idDep = results[index].id;
+        }
+        
+      }
+     
         connection.query(
         "INSERT INTO role SET ?",
         {
           title: answer.role,
           salary: answer.salary,
-          department_id: answer.department
+          department_id: idDep
 
 
         },
@@ -229,6 +232,6 @@ function addRole (){
       );
     })
     })
-})}
+}
 
    
