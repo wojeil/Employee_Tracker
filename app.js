@@ -329,10 +329,14 @@ function updateEmployee(){
       }
       
     }
+  ])
+  .then
 
 
 }
-  
+  )}
+
+
 function viewEmployeesWithId (){
   var query = "SELECT employee.id, first_name, last_name, title ";
   query += "FROM employee INNER JOIN role ON (employee.role_id = role.id)";
