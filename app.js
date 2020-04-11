@@ -330,11 +330,38 @@ function updateEmployee(){
       
     }
   ])
-  .then
+  .then(function(answer){
+    for (let index = 0; index < results.length; index++) {
+        
+      if(results[index].title === answer.role){
+        var idRole = results[index].id;
+      }
+      
+    }
+    connection.query(
+      "UPDATE employee SET ? WHERE ?",
+      [
+        {
+          role_id: idRole
+        },
+        {
+          id: answer.id
+        }
+      ],
+      function(err, res) {
+        if (err) throw err;
+        console.log(res.affectedRows + " Employee updated!\n");
+        start();
+       
+      }
+      
+    );
+  
+  })
 
 
 }
-  )}
+)}
 
 
 function viewEmployeesWithId (){
