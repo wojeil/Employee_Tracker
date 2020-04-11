@@ -167,8 +167,8 @@ function addDepartment (){
 
 function addRole (){
   //query data base first to add array of choices//
-  var query = "SELECT title, salary, name ";
-  query += "FROM role INNER JOIN department ON (role.department_id = department.id)";
+  var query = "SELECT * FROM department";
+  
   connection.query(query, function(err, results) {
     if (err) throw err;
   inquirer
@@ -192,7 +192,7 @@ function addRole (){
       choices: function(){
         var choiceArray =[];
         for(var i =0; i < results.length; i++){
-          choiceArray.push(results[i].name);
+          choiceArray.push(results[i].id + results[i].name);
         }
         return choiceArray;
       }
@@ -201,12 +201,13 @@ function addRole (){
   ])
    
     .then(function(answer){
+      answer.department= results.id;
         connection.query(
         "INSERT INTO role SET ?",
         {
           title: answer.role,
           salary: answer.salary,
-          name: answer.department,
+          department_id: answer.department,
 
 
         },
