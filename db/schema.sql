@@ -6,18 +6,18 @@ CREATE DATABASE employee_tracker_db;
 USE  employee_tracker_db;
 -- Department table --
 CREATE TABLE department (
-  department_id INT NOT NULL AUTO_INCREMENT,
+  id INT NOT NULL AUTO_INCREMENT,
   name VARCHAR(30) NOT NULL,
-  PRIMARY KEY (department_id)
+  PRIMARY KEY (id)
 );
 -- Role table --
 CREATE TABLE role (
   id INT NOT NULL AUTO_INCREMENT,
-  title VARCHAR(30),
+  title VARCHAR(255),
   salary DECIMAL(30,2),
   department_id INT,
   PRIMARY KEY (id),
-  FOREIGN KEY (department_id) REFERENCES department(department_id)
+  FOREIGN KEY (department_id) REFERENCES department(id)
 );
 -- Employee table --
 CREATE TABLE employee (
