@@ -40,6 +40,7 @@ function start() {
           "Add a Department",
           "Add a Role",
           "Add an Employee",
+          "Update an Employee",
           "Exit"
         ]
       })
@@ -69,7 +70,7 @@ function start() {
           addEmployee();
             break;
         
-        case "Add an Employee":
+        case "Update an Employee":
           updateEmployee();
           break;
             
@@ -300,4 +301,19 @@ function addEmployee(){
     })
 
 }
-   
+
+function updateEmployee(){
+  //call back view employees//
+  
+  viewEmployeesWithId();
+
+}
+  
+function viewEmployeesWithId (){
+  var query = "SELECT employee.id, first_name, last_name, title ";
+  query += "FROM employee INNER JOIN role ON (employee.role_id = role.id)";
+  connection.query(query, function (err, res,) {
+      if (err) throw err;
+      printTable(res)
+     });
+}
