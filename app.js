@@ -306,6 +306,30 @@ function updateEmployee(){
   //call back view employees//
   
   viewEmployeesWithId();
+  var query = "SELECT * FROM role";
+  connection.query(query,function(err, results){
+    if (err) throw err;
+  inquirer
+  .prompt([
+    {
+    name: "id",
+    type: "input",
+    message: "Select an Employee by their ID:"
+    },
+    {
+      name: "role",
+      type: "rawlist",
+      message: "Please select a role from the list below:",
+      choices: function(){
+        var choiceArray =[];
+        for(var i =0; i < results.length; i++){
+          choiceArray.push(results[i].title);
+        }
+        return choiceArray;
+      }
+      
+    }
+
 
 }
   
