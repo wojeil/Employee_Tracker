@@ -106,7 +106,7 @@ function viewRoles (){
         if (err) throw err;
         console.log("Roles:")
         for (var i = 0; i< res.length; i++) {
-            console.log("Title: " + res[i].title + "   ||   " + "Salary: " + res[i].salary + "   ||   " + "Department: " + res[i].name); 
+            console.log(`Title: ${res[i].title}   ||   Salary: ${res[i].salary}   ||   Department: ${res[i].name}`); 
         }
         console.log("---------------------------------------")
         console.log("---------------------------------------")
