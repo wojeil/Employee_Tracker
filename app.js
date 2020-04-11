@@ -79,7 +79,7 @@ function start() {
       });
   }
 
-//Viewing Dapartments:
+//Viewing Dapartments://
 
 function viewDepartments (){
     connection.query('SELECT * FROM `department`', function (err, res,) {
@@ -97,7 +97,7 @@ function viewDepartments (){
 
 }
 
-//Viewing Roles:
+//Viewing Roles://
 
 function viewRoles (){
     var query = "SELECT title, salary, name ";
@@ -117,7 +117,7 @@ function viewRoles (){
 
 }
 
-//Viewing Employees:
+//Viewing Employees://
 
 function viewEmployees (){
   var query = "SELECT first_name, last_name, title ";
@@ -137,7 +137,7 @@ function viewEmployees (){
 
 }
 
-//Adding a new department:
+//Adding a new department://
 
 function addDepartment (){
   inquirer
@@ -163,9 +163,14 @@ function addDepartment (){
     })
 }
 
-//Adding New Role:
+//Adding New Role://
 
 function addRole (){
+  //query data base first to add array of choices//
+  var query = "SELECT title, salary, name ";
+  query += "FROM role INNER JOIN department ON (role.department_id = department.id)";
+  connection.query(query, function(err, results) {
+    if (err) throw err;
   inquirer
     .prompt([
     
@@ -179,6 +184,19 @@ function addRole (){
       type: "input",
       message: "Enter a Salary for the role: "
 
+    },
+    {
+      name: "department",
+      type: "rawlist",
+      message: "Please select a department from the list below:",
+      choices: function(){
+        var choiceArray =[];
+        for(var i =0; i < results.length; i++){
+          choiceArray.push(results[i].name);
+        }
+        return choiceArray;
+      }
+      
     }
   ])
    
@@ -188,6 +206,7 @@ function addRole (){
         {
           title: answer.role,
           salary: answer.salary,
+          name: answer.department,
 
 
         },
@@ -200,19 +219,6 @@ function addRole (){
         }
       );
     })
-    }
+})}
 
-     // {
-    //   name: "department",
-    //   type: "rawlist",
-    //   message: "Please select a department from the list below:",
-    //   choices: [
-    //     "View Departments",
-    //     "View Roles",
-    //     "View Employees",
-    //     "Add a Department",
-    //     "Add a Role",
-    //     "Add an Employee",
-    //     "Exit"
-    //   ]
-    // })
+   
