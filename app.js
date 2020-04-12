@@ -139,7 +139,6 @@ function viewEmployees (){
       start();
             
       });
-
 }
 
 //Adding a new department://
@@ -178,7 +177,6 @@ function addRole (){
     if (err) throw err;
   inquirer
     .prompt([
-    
     {
       name: "role",
       type: "input",
@@ -204,16 +202,13 @@ function addRole (){
       
     }
   ])
-   
-    .then(function(answer){
+   .then(function(answer){
       for (let index = 0; index < results.length; index++) {
         
         if(results[index].name === answer.department){
           var idDep = results[index].id;
         }
-        
       }
-     
         connection.query(
         "INSERT INTO role SET ?",
         {
@@ -228,7 +223,6 @@ function addRole (){
           console.log(res.affectedRows + " has been inserted inserted!\n");
           
           start();
-        
         }
       );
     })
@@ -270,8 +264,7 @@ function addEmployee(){
       
     }
   ])
-   
-    .then(function(answer){
+   .then(function(answer){
       for (let index = 0; index < results.length; index++) {
         
         if(results[index].title === answer.role){
@@ -279,7 +272,6 @@ function addEmployee(){
         }
         
       }
-     
         connection.query(
         "INSERT INTO employee SET ?",
         {
@@ -301,6 +293,45 @@ function addEmployee(){
     })
 
 }
+//Updating Employee Function//
+function updateEmployee(){
+  viewEmployeesWithId();
+  var query = "SELECT * FROM employee";
+  connection.query(query,function(err,results){
+    if (err) throw err;
+    //First Prompt to grab an Employee//
+    inquirer
+    .prompt(
+      {
+        name:"id",
+        type:"input",
+        message:"Select an Employee by thier ID:"
+      }
+
+    )
+    .then(function(answer){
+      for (let i = 0; i< results.length; i++){
+        if( results[i].id === answer.id){
+          //Call back next prompt that will change employee role//
+          updateEmployeeCont();
+        }
+        else
+        // return to start menue if ID doesn't exist//
+        console.log("ID is not valid")
+        start();
+        
+      }
+
+    }
+  )})
+  }
+
+  //function for continued second prompt//
+
+
+
+
+
 
 function updateEmployee(){
   //call back view employees//
@@ -357,12 +388,8 @@ function updateEmployee(){
         start();
        
       }
-      
     );
-  
   })
-
-
 }
 )}
 
