@@ -41,6 +41,8 @@ function start() {
         "Add a Role",
         "Add an Employee",
         "Update an Employee",
+        "Remove an Employee",
+        // "Remove a Role",
         "Exit"
       ]
     })
@@ -73,6 +75,14 @@ function start() {
         case "Update an Employee":
           updateEmployee();
           break;
+        
+        case "Remove an Employee":
+          removeEmployee();
+          break;
+
+        // case "Remove a Role":
+        //   removeRole();
+        //   break;
 
         case "Exit":
           connection.end();
@@ -356,7 +366,7 @@ function updateEmployee(){
 }
 )}
 
-// Extra function to view Employees with their ID's//
+// Extra function to view Employees with their ID's to facilitate Selection//
 function viewEmployeesWithId() {
   var query = "SELECT employee.id, first_name, last_name, title ";
   query += "FROM employee INNER JOIN role ON (employee.role_id = role.id)";
@@ -366,6 +376,109 @@ function viewEmployeesWithId() {
   });
 }
 
-// Updating Manager ID//
+// Removing Employees//
+
+function removeEmployee() {
+
+  viewEmployeesWithId();
+
+  var query = "SELECT * FROM employee";
+
+  connection.query(query, function (err, results) {
+    if (err) throw err;
+    inquirer
+      .prompt([
+
+        {
+          name: "employee",
+          type: "rawlist",
+          message: "Please select an emplyee from the list below:",
+          choices: function () {
+            var choiceArray = [];
+            for (var i = 0; i < results.length; i++) {
+              choiceArray.push(results[i].id);
+            }
+            return choiceArray;
+          }
+
+        }
+      ])
+      .then(function (answer) {
+        for (let index = 0; index < results.length; index++) {
+
+          if (results[index].id === answer.employee) {
+            var idEmployeeR = results[index].id;
+          }
+
+        }
+        connection.query(
+          "DELETE FROM employee WHERE ?",
+          {
+           
+            id: idEmployeeR
+
+
+          },
+          function (err, res) {
+            if (err) throw err;
+            console.log(res.affectedRows + " has been removed!\n");
+
+            start();
+
+          }
+        );
+      })
+  })
+
+}
+
+//Removing Role//
+
+function removeRole() {
+  //query data base first to add array of choices//
+  var query = "SELECT * FROM role";
+
+  connection.query(query, function (err, results) {
+    if (err) throw err;
+    inquirer
+      .prompt([
+        {
+          name: "role",
+          type: "rawlist",
+          message: "Please select a role from the list below:",
+          choices: function () {
+            var choiceArray = [];
+            for (var i = 0; i < results.length; i++) {
+              choiceArray.push(results[i].title);
+            }
+            return choiceArray;
+          }
+
+        }
+      ])
+      .then(function (answer) {
+        for (let index = 0; index < results.length; index++) {
+
+          if (results[index].title === answer.role) {
+            var idRoleR = results[index].id;
+          }
+        }
+        connection.query(
+          "DELETE FROM role WHERE ?",
+          {
+            id: idRoleR,
+            
+          },
+          function (err, res) {
+            if (err) throw err;
+            console.log(res.affectedRows + " has been Deleted \n");
+
+            start();
+          }
+        );
+      })
+  })
+}
+
 
 
