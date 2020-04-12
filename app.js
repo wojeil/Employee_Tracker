@@ -42,7 +42,8 @@ function start() {
         "Add an Employee",
         "Update an Employee",
         "Remove an Employee",
-        // "Remove a Role",
+        "Remove a Role",
+        "Remove a Department",
         "Exit"
       ]
     })
@@ -80,9 +81,13 @@ function start() {
           removeEmployee();
           break;
 
-        // case "Remove a Role":
-        //   removeRole();
-        //   break;
+        case "Remove a Role":
+          removeRole();
+          break;
+
+        case "Remove a Department":
+          removeDepartment();
+          break;
 
         case "Exit":
           connection.end();
@@ -471,7 +476,7 @@ function removeRole() {
           },
           function (err, res) {
             if (err) throw err;
-            console.log(res.affectedRows + " has been Deleted \n");
+            console.log(res.affectedRows + " has been removed \n");
 
             start();
           }
@@ -480,5 +485,51 @@ function removeRole() {
   })
 }
 
+//Remove Department//
 
+function removeDepartment() {
+  //query data base first to add array of choices//
+  var query = "SELECT * FROM Department";
+
+  connection.query(query, function (err, results) {
+    if (err) throw err;
+    inquirer
+      .prompt([
+        {
+          name: "department",
+          type: "rawlist",
+          message: "Please select a department from the list below:",
+          choices: function () {
+            var choiceArray = [];
+            for (var i = 0; i < results.length; i++) {
+              choiceArray.push(results[i].name);
+            }
+            return choiceArray;
+          }
+
+        }
+      ])
+      .then(function (answer) {
+        for (let index = 0; index < results.length; index++) {
+
+          if (results[index].name === answer.department) {
+            var idDepR = results[index].id;
+          }
+        }
+        connection.query(
+          "DELETE FROM department WHERE ?",
+          {
+            id: idDepR,
+            
+          },
+          function (err, res) {
+            if (err) throw err;
+            console.log(res.affectedRows + " has been removed \n");
+
+            start();
+          }
+        );
+      })
+  })
+}
 
