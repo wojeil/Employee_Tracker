@@ -304,8 +304,8 @@ function addEmployee(){
 
 function updateEmployee(){
   //call back view employees//
-  
   viewEmployeesWithId();
+  //have the role table to be selected for choices//
   var query = "SELECT * FROM role";
   connection.query(query,function(err, results){
     if (err) throw err;
@@ -320,6 +320,7 @@ function updateEmployee(){
       name: "role",
       type: "rawlist",
       message: "Please select a role from the list below:",
+      //will list all the role titles
       choices: function(){
         var choiceArray =[];
         for(var i =0; i < results.length; i++){
@@ -331,9 +332,11 @@ function updateEmployee(){
     }
   ])
   .then(function(answer){
+    //loop go over all the role table items//
     for (let index = 0; index < results.length; index++) {
-        
+    //if title in table role matches the selected answer in prompt//   
       if(results[index].title === answer.role){
+    //create var to match the ID's//
         var idRole = results[index].id;
       }
       
@@ -363,7 +366,7 @@ function updateEmployee(){
 }
 )}
 
-
+// Extra function to view Employees with their ID's//
 function viewEmployeesWithId (){
   var query = "SELECT employee.id, first_name, last_name, title ";
   query += "FROM employee INNER JOIN role ON (employee.role_id = role.id)";
