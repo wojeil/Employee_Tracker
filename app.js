@@ -101,7 +101,9 @@ function start() {
 function viewDepartments() {
   connection.query('SELECT id AS ID, name AS Department FROM `department`', function (err, res, ) {
     if (err) throw err;
+    //will print the results in table form:
     printTable(res);
+    //Logs Below show a different table form
     // console.log("Departments:")
     // for (var i = 0; i< res.length; i++) {
     //     console.log(res[i].name); 
@@ -220,7 +222,7 @@ function addRole() {
       ])
       .then(function (answer) {
         for (let index = 0; index < results.length; index++) {
-
+          //When answer and result match we can target dep ID
           if (results[index].name === answer.department) {
             var idDep = results[index].id;
           }
@@ -248,10 +250,12 @@ function addRole() {
 //Adding a new Employee://
 
 function addEmployee() {
+  //connect to role table//
   var query = "SELECT * FROM role";
 
   connection.query(query, function (err, results) {
     if (err) throw err;
+    //Prompt to grab Employee info//
     inquirer
       .prompt([
 
@@ -282,7 +286,7 @@ function addEmployee() {
       ])
       .then(function (answer) {
         for (let index = 0; index < results.length; index++) {
-
+          //When answer matches result we can target role ID
           if (results[index].title === answer.role) {
             var idRole = results[index].id;
           }
