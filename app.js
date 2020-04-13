@@ -5,21 +5,21 @@ var logo = require("asciiart-logo");
 
 
 //log Design//
-const longText = "A Simple Way to Manage Your Business Employee Structure";
+const longText = "A Simple Way to Manage Your Business Employee Structure.";
  
 console.log(
     logo({
-        name: "Just a simple example",
-        font: "Speed",
+        name: "Business Employee Tracker",
+        font: "Block",
         lineChars: 10,
         padding: 2,
         margin: 3,
-        borderColor: "grey",
-        logoColor: "bold-green",
-        textColor: "green",
+        borderColor: "white",
+        logoColor: "bold-cyan",
+        textColor: "cyan",
     })
     .emptyLine()
-    .right("version 3.7.123")
+    .right("version 0.1.11")
     .emptyLine()
     .center(longText)
     .render()
