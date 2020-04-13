@@ -238,7 +238,7 @@ function addRole() {
           },
           function (err, res) {
             if (err) throw err;
-            console.log(res.affectedRows + " has been inserted inserted!\n");
+            console.log(res.affectedRows + " has been inserted!\n");
 
             start();
           }
@@ -303,7 +303,7 @@ function addEmployee() {
           },
           function (err, res) {
             if (err) throw err;
-            console.log(res.affectedRows + " has been inserted inserted!\n");
+            console.log(res.affectedRows + " has been inserted!\n");
 
             start();
 
@@ -401,7 +401,7 @@ function removeEmployee() {
         {
           name: "employee",
           type: "rawlist",
-          message: "Please select an emplyee from the list below:",
+          message: "Referencing the table above, select an employee via ID from the list below:",
           choices: function () {
             var choiceArray = [];
             for (var i = 0; i < results.length; i++) {
