@@ -1,6 +1,30 @@
 var mysql = require("mysql");
-var inquirer = require('inquirer');
-var { printTable } = require('console-table-printer');
+var inquirer = require("inquirer");
+var { printTable } = require("console-table-printer");
+var logo = require("asciiart-logo");
+
+
+//log Design//
+const longText = "A Simple Way to Manage Your Business Employee Structure";
+ 
+console.log(
+    logo({
+        name: "Just a simple example",
+        font: "Speed",
+        lineChars: 10,
+        padding: 2,
+        margin: 3,
+        borderColor: "grey",
+        logoColor: "bold-green",
+        textColor: "green",
+    })
+    .emptyLine()
+    .right("version 3.7.123")
+    .emptyLine()
+    .center(longText)
+    .render()
+);
+
 
 
 var connection = mysql.createConnection({

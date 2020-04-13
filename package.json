@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/wojeil/Employee_Tracker#readme",
   "dependencies": {
+    "asciiart-logo": "^0.2.6",
     "console-table-printer": "^1.2.13",
     "inquirer": "^7.1.0",
     "mysql": "^2.18.1"
