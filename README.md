@@ -2,7 +2,7 @@
 Project with mySQL
 
 
-<img src= (https://user-images.githubusercontent.com/60321934/82580850-bfc76100-9b5d-11ea-9ad8-3bb3a71708f5.png) width="100" height="100">
+<img src= "./assets/imageApp.png" width="350" height="200">
 
 
 
@@ -25,6 +25,9 @@ Asciiart-Logo
 
 Deployment
 Node
+
+Try Me Live
+Fork Repo and run node app.js in console
 
 Built With
 Node
